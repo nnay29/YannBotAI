@@ -1,0 +1,6 @@
+name: yann-chatbot
+services:
+    yann-chatbot:
+        ports:
+            - 3600:3500
+        image: yann177/yann-chatbot:v1
