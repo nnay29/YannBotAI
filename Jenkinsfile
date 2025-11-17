@@ -1,12 +1,16 @@
 pipeline {
     agent any
     
+    environment {
+        DOCKERHUB_URL = "https://hub.docker.com/r/yann177/yann-chatbot/tags"
+        GITHUB_REPO_URL = "https://github.com/nnay29/YannBotAI"
+    }
+    
     stages {
         stage('Extract Git Info') {
             steps {
                 echo '🔍 Extracting Git information...'
                 script {
-                    // Try to get commit info, if it fails use fallback
                     try {
                         env.COMMIT_SHA = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
                     } catch (Exception e) {
@@ -48,8 +52,32 @@ pipeline {
     }
     
     post {
+        always {
+            script {
+                // Slack notification using your credential ID
+                withCredentials([string(credentialsId: 'slack-bot-token', variable: 'SLACK_WEBHOOK_URL')]) {
+                    slackSend(
+                        channel: '#builds',
+                        color: currentBuild.currentResult == 'SUCCESS' ? 'good' : 'danger',
+                        message: """
+                        🚀 *ChatBot Build ${currentBuild.currentResult}* 
+                        📦 *Image:* yann177/yann-chatbot:${env.IMAGE_TAG}
+                        🔗 *DockerHub:* ${env.DOCKERHUB_URL}
+                        📎 *GitHub:* ${env.GITHUB_REPO_URL}
+                        🔢 *Build:* #${env.BUILD_NUMBER}
+                        ⏱️ *Duration:* ${currentBuild.durationString}
+                        """
+                    )
+                }
+            }
+        }
+        
         success {
             echo "✅ Success! Image: yann177/yann-chatbot:${env.IMAGE_TAG}"
+        }
+        
+        failure {
+            echo "❌ Build failed! Check logs for details."
         }
     }
 }
