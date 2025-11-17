@@ -1,42 +1,38 @@
 pipeline {
     agent any
     
-    environment {
-        // These will be set by Jenkins when webhook triggers
-        COMMITTER = "${env.GIT_COMMITTER ?: 'manual'}"
-        COMMIT_SHA = "${env.GIT_COMMIT ?: 'unknown'}"
-        BRANCH_NAME = "${env.GIT_BRANCH ?: 'unknown'}"
-        SHORT_SHA = "${env.GIT_COMMIT ? env.GIT_COMMIT.substring(0, 7) : 'unknown'}"
-    }
-    
     stages {
-        stage('Extract GitHub Info') {
+        stage('Fix Git Permissions') {
             steps {
-                echo '🔍 Extracting GitHub webhook data...'
                 script {
-                    // Debug what info we have
-                    echo "GIT_BRANCH: ${env.GIT_BRANCH}"
-                    echo "GIT_COMMIT: ${env.GIT_COMMIT}" 
-                    echo "GIT_URL: ${env.GIT_URL}"
+                    /
+                    sh '''
+                    git config --global --add safe.directory /var/jenkins_home/workspace/YannBotAI
+                    git config --global --add safe.directory /var/jenkins_home/workspace/YannBotAI@libs
+                    '''
+                }
+            }
+        }
+        
+        stage('Extract Git Info') {
+            steps {
+                echo '🔍 Extracting Git information...'
+                script {
+                    env.COMMIT_SHA = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                    env.SHORT_SHA = env.COMMIT_SHA.substring(0, 7)
+                    env.IMAGE_TAG = "build-${env.BUILD_NUMBER}-${env.SHORT_SHA}"
                     
-                    // Try to extract PR info (may not work yet)
-                    echo "CHANGE_ID: ${env.CHANGE_ID ?: 'NOT SET'}"
-                    echo "CHANGE_AUTHOR: ${env.CHANGE_AUTHOR ?: 'NOT SET'}"
-                    
-                    // For now, create a simple tag
-                    IMAGE_TAG = "build-${env.BUILD_NUMBER}-${SHORT_SHA}"
-                    echo "IMAGE_TAG: ${IMAGE_TAG}"
+                    echo "IMAGE_TAG: ${env.IMAGE_TAG}"
+                    echo "COMMIT_SHA: ${env.COMMIT_SHA}"
                 }
             }
         }
         
         stage('Build Docker Image') {
             steps {
-                echo '🐳 Building Docker image...'
                 script {
-                    // Build with dynamic tag
                     sh """
-                    docker build -t yann177/yann-chatbot:${IMAGE_TAG} .
+                    docker build -t yann177/yann-chatbot:${env.IMAGE_TAG} .
                     """
                 }
             }
@@ -44,7 +40,6 @@ pipeline {
         
         stage('Push to DockerHub') {
             steps {
-                echo '📦 Pushing to DockerHub...'
                 script {
                     withCredentials([usernamePassword(
                         credentialsId: 'dockerhub-creds',
@@ -53,7 +48,7 @@ pipeline {
                     )]) {
                         sh """
                         echo \"\${DOCKER_PASS}\" | docker login -u \"\${DOCKER_USER}\" --password-stdin
-                        docker push yann177/yann-chatbot:${IMAGE_TAG}
+                        docker push yann177/yann-chatbot:${env.IMAGE_TAG}
                         """
                     }
                 }
@@ -63,11 +58,10 @@ pipeline {
     
     post {
         success {
-            echo "✅ Success! Image: yann177/yann-chatbot:${IMAGE_TAG}"
-            // We'll add Slack here later
+            echo "✅ Success!  ashhhh Image: yann177/yann-chatbot:${env.IMAGE_TAG}"
         }
-        failure {
-            echo "❌ Build failed!"
+        failure{
+            echo " Le build a ndem fort fort ashhhh"
         }
     }
 }
