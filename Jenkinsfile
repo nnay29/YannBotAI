@@ -57,7 +57,7 @@ pipeline {
                 // Slack notification using your credential ID
                 withCredentials([string(credentialsId: 'slack-bot-token', variable: 'SLACK_WEBHOOK_URL')]) {
                     slackSend(
-                        channel: '#builds',
+                        channel: '#jenkins-ci-builds',
                         color: currentBuild.currentResult == 'SUCCESS' ? 'good' : 'danger',
                         message: """
                         🚀 *ChatBot Build ${currentBuild.currentResult}* 
