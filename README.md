@@ -201,15 +201,15 @@ In case of any issue, check the following:
 
 - Authorize ngrok as a safe program to your Antivirus Software
 - Verify ngrok terminal is still running
-- Check if the link on ngrok is exactly the one found on Github actions followd by /github-webhook/
+- Check if the link on ngrok is exactly the one found on Github actions followed by /github-webhook/
 ## Lessons Learned
 
 What did you learn while building this project? What challenges did you face and how did you overcome them?
 
-1) I discovered webhooks.  
+1) I discovered webhooks and their purpose.  
 2) I understood the actual use of PATs. Now I know they help us launch apps on our behalf. 
 3) I discovered tunneling with ngrok now it is easier for me to show projects while still in development. Sending tunnel links to another device also eases the evaluation of the Responsive web designs
-4) 
+
 
 
 ## Support
@@ -225,5 +225,5 @@ If you have any questions or run into issues, please:
 Your future SuperEngineer 🚀🧠
 
 
-_Last updateed November 2024_
+_Last updated November 2024_
 
