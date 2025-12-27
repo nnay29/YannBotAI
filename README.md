@@ -10,21 +10,21 @@ A Jenkins-powered CI/CD pipeline for a React.js chatbot that automates builds on
 - Real-time Slack notifications with links.
 
 ## Technologies Used
-**Jenkins** - CI/CD automation server
+- **Jenkins** - CI/CD automation server
 
-**Docker** Containerization
+- **Docker** Containerization
 
-**Reactjs** - Frontend framework
+- **Reactjs** - Frontend framework
 
-**Vite** - Build Technologies
+- **Vite** - Build Technologies
 
-**Github** - Source code management
+- **Github** - Source code management
 
-**Slack** - Notifications
+- **Slack** - Notifications
 
-**ngrok** - secure tunnels for webhook
+- **ngrok** - secure tunnels for webhook
 ## Architecture
-GitHub → Webhook → Jenkins → Docker Build → Slack Notification → Docker Hub
+  GitHub → Webhook → Jenkins → Docker Build → Slack Notification → Docker Hub
 ## CI/CD Pipeline Flow
 
 1. Trigger
@@ -136,9 +136,9 @@ Open the chatbot in your browser on
   http://localhost:3600/
 ```
 
-### Phase 2: Jenkins project setup
+## Phase 2: Jenkins project setup
 
-## 1 Install required plugins:
+#### 1 Install required plugins:
 
 Docker Pipeline
 
@@ -146,7 +146,7 @@ Slack Notification
 
 GitHub Integration
 
-## 2 Setup credentials:
+#### 2 Setup credentials:
 
 DockerHub credentials (dockerhub-creds)
 
@@ -154,7 +154,7 @@ Slack webhook (slack-bot-token)
 
 GitHub credentials (if private repo)
 
-## 3 Create pipeline job:
+####  3 Create pipeline job:
 
 Select "Pipeline script from SCM"
 
@@ -162,10 +162,10 @@ Point to your GitHub repository
 
 Set branch to main
 
-### Phase 3: Slack Configuration
+## Phase 3: Slack Configuration
 
 
-### Phase 4: Github Webhook setup
+## Phase 4: Github Webhook setup
 - Start ngrok for Webhooks ```ngrok http 8185``` if your jenkins-server runs on port 8185. Note the returned ngrok url.
 - Go to your GitHub repo → Settings → Webhooks → Add webhook
 - add webhook url ```https://your-ngrok-url.ngrok.io/github-webhook/```
@@ -176,7 +176,7 @@ Set branch to main
 
 - Active: ✅
 
-### Phase 5: Testing
+## Phase 5: Testing
 
 ## Features
 ✅ Build automatique sur push Git
@@ -220,10 +220,11 @@ If you have any questions or run into issues, please:
 
 + Review Jenkins console logs
 
-+ Open an issue on GitHub
++ Open an issue on GitHub, I'll be glad to check it out
+
 ## About Me
-Your future SuperEngineer 🚀🧠
+Your future SuperEngineer, [nnay29](https://github.com/nnay29) 🚀🧠
 
 
-_Last updated November 2024_
+_Last updated December 27th 2025_
 
