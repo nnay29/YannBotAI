@@ -1,6 +1,10 @@
 
 # YannBotAI CI/CD pipeline
 
+**Quick Note :** *_I wanted to understand the modern software lifecycle, so I built an end-to-end pipeline for a small chatbot web app. It taught me how to containerize applications with Docker and automate the flow. Now, I'm applying that same automation logic to Data Engineering._*
+
+
+
 A Jenkins-powered CI/CD pipeline for a React.js chatbot that automates builds on GitHub updates, publishes Docker images to Docker Hub, and delivers deployment notifications via Slack — streamlining the release workflow.
 ## Goals and Objectives of the project
 - Automate Docker builds on Jenkins
