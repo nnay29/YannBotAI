@@ -4,6 +4,11 @@
 **Quick Note :** *_I wanted to understand the modern software lifecycle, so I built an end-to-end pipeline for a small chatbot web app. It taught me how to containerize applications with Docker and automate the flow. Now, I'm applying that same automation logic to Data Engineering._*
 
 
+Watch the Demo Video 👇
+
+https://github.com/user-attachments/assets/74d33487-ab46-4c8b-bca9-8b1e8185e429
+
+
 
 A Jenkins-powered CI/CD pipeline for a React.js chatbot that automates builds on GitHub updates, publishes Docker images to Docker Hub, and delivers deployment notifications via Slack — streamlining the release workflow.
 ## Goals and Objectives of the project
